@@ -7,6 +7,7 @@ Top-rated freelancer on Upwork (top 3%, 1000+ hours, 5-star). Based in Arizona.
 ## What I work on
 
 - **AI-driven workflow automation** — lead pipelines, document extraction, classification, outreach personalization
+- **Multi-system B2B agent orchestration** — agents that work across HubSpot, Microsoft 365, Zendesk, Slack, Teams, internal portals; replacing manual ops handoffs with provable end-to-end runs
 - **HIPAA-compliant healthtech** — running [Patient Pulse Tracker](https://patientpulsetracker.com), a behavioral-health assessment platform
 - **Practical full-stack** — TypeScript, React, Node/Express, Azure Functions, PostgreSQL, SQLite. I prefer one well-designed codebase over six SaaS subscriptions
 
@@ -20,6 +21,18 @@ Top-rated freelancer on Upwork (top 3%, 1000+ hours, 5-star). Based in Arizona.
 
 Each repo has CI badges, real eval results, security audits applied, and walkthrough docs.
 
+### B2B integration agents (Python · LangGraph · Anthropic)
+
+For B2B services companies whose ops are split across HubSpot / M365 / Zendesk / Slack / Teams / a custom portal. Verified end-to-end against a real Microsoft 365 tenant (mailbox + SharePoint + Planner + file upload all readable via Graph API after the agent run).
+
+| | What it is | Why look |
+|---|---|---|
+| **[partner-onboarding-agent](https://github.com/anthonyonazure/partner-onboarding-agent)** | LangGraph agent that takes a closed-won HubSpot deal to fully operational in <2 hours: provisions M365 (mailbox, SharePoint, Planner), Zendesk org with SLA, internal portal account; generates a co-branded PDF welcome packet (Jinja2 + WeasyPrint), uploads to SharePoint + portal, posts a summary back to the deal | Real M365 readback in the README — every resource ID is Graph-addressable, not a mock. Demonstrates parallel fan-out with a barrier-join state graph and idempotent provisioning |
+| **[ai-account-manager](https://github.com/anthonyonazure/ai-account-manager)** | Always-on revenue co-pilot. Watches every active partner account, ranks churn / expansion / co-sell signals, briefs each AM daily with a ranked action list. Three delivery channels working live: Slack DM (Block Kit), Teams channel (Adaptive Card via Power Automate), Teams 1:1 DM (Bot Framework with proactive messaging) | Three real screenshots in the README — same briefing, three channels, all working against a real tenant. Math is deterministic (signals are pure Python, no LLM); LLM only generates the narrative |
+| **[b2b-agent-toolkit](https://github.com/anthonyonazure/b2b-agent-toolkit)** | Reusable Python adapters for the B2B SaaS stack: HubSpot, Microsoft Graph (real impl), Zendesk, custom portal API. Adapter-protocol abstractions so real ↔ mock swap with one env flag | Both agents above import this. Demonstrates how to keep integrations testable when half your stack is third-party |
+
+Each repo runs end-to-end **without an API key** thanks to deterministic stub fallbacks — clone, `pip install -e .`, run the CLI, see the agent work.
+
 ## How I think about LLM products
 
 - **Tool-use forcing over free-form generation.** Strict JSON schemas eliminate parsing failures and let you measure quality.
@@ -31,10 +44,10 @@ Each repo has CI badges, real eval results, security audits applied, and walkthr
 
 ## Stack I reach for
 
-**Day-to-day**: TypeScript · React · Tailwind · Node 20 · Express · better-sqlite3 · PostgreSQL · Vite
-**AI**: Anthropic Claude (Sonnet for quality, Haiku for cheap) · prompt caching · tool-use schemas
-**Cloud**: Azure Functions · Azure Postgres · Azure Key Vault · GitHub Actions
-**Communication**: Twilio · Postmark · Stripe
+**Day-to-day**: TypeScript · React · Tailwind · Node 20 · Express · Python 3.12 · FastAPI · SQLAlchemy · better-sqlite3 · PostgreSQL · Vite
+**AI / agents**: Anthropic Claude (Sonnet for quality, Haiku for cheap) · LangGraph state machines · prompt caching · tool-use schemas · Langfuse tracing
+**Cloud**: Azure Functions · Azure Bot Service · Azure Postgres · Azure Key Vault · GitHub Actions · Microsoft Graph (app-only auth)
+**Comms / integrations**: Slack (bot tokens, Block Kit) · Microsoft Teams (Bot Framework + Power Automate) · HubSpot · Zendesk · Twilio · Postmark · Stripe
 
 ## Contact
 
